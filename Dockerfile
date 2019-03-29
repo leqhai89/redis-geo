@@ -1,8 +1,9 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM microsoft/dotnet:sdk AS build-env
 COPY src /app
 WORKDIR /app
+COPY src/NuGet.Config /root/.nuget/NuGet/
 
-RUN dotnet restore --configfile /src/NuGet.Config
+RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
